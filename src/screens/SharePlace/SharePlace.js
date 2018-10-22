@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import PlaceInput from '../../components/PlaceInput/PlaceInput';
@@ -14,6 +14,7 @@ class SharePlaceScreen extends Component {
   onNavigatorEvent = event => {
     if (event.type === 'NavBarButtonPress') {
       if (event.id === 'sideDrawerToggle') {
+        // sideDrawer yeri left-right
         this.props.navigator.toggleDrawer({
           side: 'left',
         });

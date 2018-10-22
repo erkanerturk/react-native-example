@@ -1,4 +1,3 @@
-import { Dimensions } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -15,7 +14,9 @@ const startTabs = () => {
           label: 'Find Place',
           title: 'Find Place',
           icon: sources[0],
+          // Navigasyon barındaki buttonlar
           navigatorButtons: {
+            // Butonların yeri
             leftButtons: [
               {
                 icon: sources[2],
@@ -41,7 +42,9 @@ const startTabs = () => {
           },
         },
       ],
+      // Drawer'lar tanımlanması
       drawer: {
+        // Soldan açılan drawer tanımlaması
         left: {
           screen: 'awesome-places.SideDrawer',
         },
