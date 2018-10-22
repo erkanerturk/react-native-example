@@ -1,11 +1,17 @@
+import { Platform } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const startTabs = () => {
+  const icons =
+    Platform.OS === 'android'
+      ? { map: 'md-map', shareAlt: 'md-share-alt', menu: 'md-menu' }
+      : { map: 'ios-map', shareAlt: 'ios-share-alt', menu: 'ios-menu' };
+
   Promise.all([
-    Icon.getImageSource('md-map', 30),
-    Icon.getImageSource('ios-share-alt', 30),
-    Icon.getImageSource('ios-menu', 30),
+    Icon.getImageSource(icons.map, 30),
+    Icon.getImageSource(icons.shareAlt, 30),
+    Icon.getImageSource(icons.menu, 30),
   ]).then(sources => {
     Navigation.startTabBasedApp({
       tabs: [
