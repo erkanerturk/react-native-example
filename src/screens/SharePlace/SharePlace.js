@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView, Image } from 'react-native';
+import { View, Button, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 
 import PlaceInput from '../../components/PlaceInput/PlaceInput';
@@ -51,22 +51,24 @@ class SharePlaceScreen extends Component {
 
   render() {
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <MainText>
-            <HeadingText>Share a place with us</HeadingText>
-          </MainText>
-          <PickImage />
-          <PickLocation />
-          <PlaceInput
-            placeName={this.state.placeName}
-            onChangeText={this.placeNameChangedHandler}
-          />
-          <View style={styles.button}>
-            <Button title="Share the Place" onPress={this.placeAddedHandler} />
+      <View style={{ flex: 1 }}>
+        <KeyboardAvoidingView behavior={'padding'} style={{ flex: 1 }}>
+          <View style={styles.container}>
+            <MainText>
+              <HeadingText>Share a place with us</HeadingText>
+            </MainText>
+            <PickImage />
+            <PickLocation />
+            <PlaceInput
+              placeName={this.state.placeName}
+              onChangeText={this.placeNameChangedHandler}
+            />
+            <View style={styles.button}>
+              <Button title="Share the Place" onPress={this.placeAddedHandler} />
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </KeyboardAvoidingView>
+      </View>
     );
   }
 }
