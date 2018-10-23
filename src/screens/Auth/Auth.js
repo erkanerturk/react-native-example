@@ -27,6 +27,7 @@ class AuthScreen extends Component {
   updateViewMode = dims => {
     this.setState({
       viewMode: dims.window.height > 500 ? 'portrait' : 'landspace',
+      //viewMode: dims.window.height > dims.window.width ? "portrait" : "landscape"
     });
   };
 
@@ -56,6 +57,7 @@ class AuthScreen extends Component {
             <DefaultInput placeholder="Your E-Mail Address" style={styles.input} />
             <View
               style={
+                //styles[this.state.viewMode+"PasswordContainer"]
                 this.state.viewMode === 'portrait'
                   ? styles.portraitPasswordContainer
                   : styles.landscapePasswordContainer
