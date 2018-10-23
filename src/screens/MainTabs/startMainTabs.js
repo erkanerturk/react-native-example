@@ -48,6 +48,14 @@ const startTabs = () => {
           },
         },
       ],
+      tabsStyle: {
+        // For IOS
+        tabBarSelectedButtonColor: 'orange',
+      },
+      appStyle: {
+        // For Android
+        tabBarSelectedButtonColor: 'orange',
+      },
       // Drawer'lar tanımlanması
       drawer: {
         // Soldan açılan drawer tanımlaması
