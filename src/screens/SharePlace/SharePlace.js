@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, Button, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
 import PlaceInput from '../../components/PlaceInput/PlaceInput';
@@ -8,6 +8,7 @@ import PickLocation from '../../components/PickLocation/PickLocation';
 import MainText from '../../components/UI/MainText/MainText';
 import HeadingText from '../../components/UI/HeadingText/HeadingText';
 
+import validate from '../../utility/validation';
 import { addPlace } from '../../store/actions/index';
 
 class SharePlaceScreen extends Component {
@@ -17,7 +18,20 @@ class SharePlaceScreen extends Component {
   };
 
   state = {
-    placeName: '',
+    controls: {
+      placeName: {
+        value: '',
+        valid: false,
+        touched: false,
+        validationRules: {
+          notEmpty: true,
+        },
+      },
+      location: {
+        value: null,
+        valid: false,
+      },
+    },
   };
 
   constructor(props) {
@@ -36,39 +50,66 @@ class SharePlaceScreen extends Component {
     }
   };
 
-  placeNameChangedHandler = placeName => {
-    this.setState({
-      placeName,
+  placeNameChangedHandler = val => {
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          placeName: {
+            ...prevState.controls.placeName,
+            value: val,
+            valid: validate(val, prevState.controls.placeName.validationRules),
+            touched: true,
+          },
+        },
+      };
+    });
+  };
+
+  locationPickedHandler = location => {
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          location: {
+            value: location,
+            valid: true,
+          },
+        },
+      };
     });
   };
 
   placeAddedHandler = () => {
-    const { placeName } = this.state;
-    if (placeName.trim() !== '') {
-      this.props.onAddPlace(placeName);
-    }
+    this.props.onAddPlace(this.state.controls.placeName.value, this.state.controls.location.value);
   };
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <KeyboardAvoidingView behavior={'padding'} style={{ flex: 1 }}>
-          <View style={styles.container}>
-            <MainText>
-              <HeadingText>Share a place with us</HeadingText>
-            </MainText>
-            <PickImage />
-            <PickLocation />
-            <PlaceInput
-              placeName={this.state.placeName}
-              onChangeText={this.placeNameChangedHandler}
+      <ScrollView>
+        <View style={styles.container}>
+          <MainText>
+            <HeadingText>Share a place with us</HeadingText>
+          </MainText>
+          <PickImage />
+          <PickLocation onLocationPick={this.locationPickedHandler} />
+          <PlaceInput
+            placeName={this.state.placeName}
+            onChangeText={this.placeNameChangedHandler}
+          />
+          <View style={styles.button}>
+            <Button
+              title="Share the Place!"
+              onPress={this.placeAddedHandler}
+              disabled={
+                !this.state.controls.placeName.valid ||
+                !this.state.controls.location.valid ||
+                !this.state.controls.location
+              }
             />
-            <View style={styles.button}>
-              <Button title="Share the Place" onPress={this.placeAddedHandler} />
-            </View>
           </View>
-        </KeyboardAvoidingView>
-      </View>
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -96,7 +137,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddPlace: placeName => dispatch(addPlace(placeName)),
+    onAddPlace: (placeName, location) => dispatch(addPlace(placeName, location)),
   };
 };
 
