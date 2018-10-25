@@ -3,11 +3,10 @@ import { View, Button, StyleSheet, ScrollView, ActivityIndicator } from 'react-n
 import { connect } from 'react-redux';
 
 import PlaceInput from '../../components/PlaceInput/PlaceInput';
-import PickImage from '../../components/PickImage/PickImage';
-import PickLocation from '../../components/PickLocation/PickLocation';
 import MainText from '../../components/UI/MainText/MainText';
 import HeadingText from '../../components/UI/HeadingText/HeadingText';
-
+import PickImage from '../../components/PickImage/PickImage';
+import PickLocation from '../../components/PickLocation/PickLocation';
 import validate from '../../utility/validation';
 import { addPlace, startAddPlace } from '../../store/actions/index';
 
@@ -23,9 +22,9 @@ class SharePlaceScreen extends Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
   }
 
-  componentWillMount = () => {
+  componentWillMount() {
     this.reset();
-  };
+  }
 
   reset = () => {
     this.setState({
@@ -50,12 +49,12 @@ class SharePlaceScreen extends Component {
     });
   };
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate() {
     if (this.props.placeAdded) {
       this.props.navigator.switchToTab({ tabIndex: 0 });
       // this.props.onStartAddPlace();
     }
-  };
+  }
 
   onNavigatorEvent = event => {
     if (event.type === 'ScreenChangedEvent') {
@@ -63,7 +62,6 @@ class SharePlaceScreen extends Component {
         this.props.onStartAddPlace();
       }
     }
-
     if (event.type === 'NavBarButtonPress') {
       if (event.id === 'sideDrawerToggle') {
         // sideDrawer yeri left-right
@@ -162,7 +160,7 @@ class SharePlaceScreen extends Component {
             ref={ref => (this.locationPicker = ref)}
           />
           <PlaceInput
-            placeName={this.state.placeName}
+            placeData={this.state.controls.placeName}
             onChangeText={this.placeNameChangedHandler}
           />
           <View style={styles.button}>{submitButton}</View>
