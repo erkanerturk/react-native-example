@@ -31,12 +31,13 @@ Navigation.registerComponent(
   store,
   Provider
 );
-Navigation.registerComponent('awesome-places.SideDrawer', () => SideDrawer);
+Navigation.registerComponent('awesome-places.SideDrawer', () => SideDrawer, store, Provider);
 
 // Start a App
-Navigation.startSingleScreenApp({
-  screen: {
-    screen: 'awesome-places.AuthScreen', // // unique ID registered with Navigation.registerScreen
-    title: 'Login', // title of the screen as appears in the nav bar (optional)
-  },
-});
+export default () =>
+  Navigation.startSingleScreenApp({
+    screen: {
+      screen: 'awesome-places.AuthScreen', // // unique ID registered with Navigation.registerScreen
+      title: 'Login', // title of the screen as appears in the nav bar (optional)
+    },
+  });
