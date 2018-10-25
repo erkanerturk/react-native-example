@@ -1,5 +1,9 @@
-import { SET_PLACES, REMOVE_PLACE } from './actionTypes';
+import { SET_PLACES, REMOVE_PLACE, START_ADD_PLACE, PLACE_ADDED } from './actionTypes';
 import { uiStartLoading, uiStopLoading, authGetToken } from './index';
+
+export const startAddPlace = () => ({
+  type: START_ADD_PLACE,
+});
 
 export const addPlace = (placeName, location, image) => {
   return dispatch => {
@@ -42,6 +46,7 @@ export const addPlace = (placeName, location, image) => {
       .then(parsedRes => {
         console.log(parsedRes);
         dispatch(uiStopLoading());
+        dispatch(placeAdded());
       })
       .catch(err => {
         console.log(err);
@@ -50,6 +55,10 @@ export const addPlace = (placeName, location, image) => {
       });
   };
 };
+
+export const placeAdded = () => ({
+  type: PLACE_ADDED,
+});
 
 export const getPlaces = () => {
   return dispatch => {
